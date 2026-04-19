@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-deepseek-bg: #f9f9f9;
+  --color-deepseek-sidebar: #ffffff;
+  --color-deepseek-border: #e5e7eb;
+  --color-deepseek-blue: #2563eb;
+  --color-deepseek-user-msg: #f3f4f6;
+  --color-deepseek-ai-msg: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
