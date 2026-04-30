@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  --color-ds-bg: #f9f9f9;
+  --color-ds-bg-dark: #121212;
+  --color-ds-sidebar: #ffffff;
+  --color-ds-sidebar-dark: #1e1e1e;
+  --color-ds-primary: #10a37f; /* Example accent */
+  --color-ds-primary-dark: #10a37f;
+  --color-ds-text: #333333;
+  --color-ds-text-dark: #ececec;
+  --color-ds-muted: #666666;
+  --color-ds-muted-dark: #888888;
+  --color-ds-border: #e5e5e5;
+  --color-ds-border-dark: #333333;
+  --color-ds-user-msg: #ffffff;
+  --color-ds-user-msg-dark: #2a2a2a;
+  --color-ds-bot-msg: #f0f0f0;
+  --color-ds-bot-msg-dark: #1e1e1e;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  body {
+    @apply bg-ds-bg text-ds-text antialiased;
+  }
+
+  .dark body {
+    @apply bg-ds-bg-dark text-ds-text-dark;
+  }
+}
