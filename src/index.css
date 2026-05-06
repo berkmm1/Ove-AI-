@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-ai-bg: #f4f6f8;
+  --color-ai-bubble: #ffffff;
+  --color-ai-user-bubble: #dbeafe;
+}
