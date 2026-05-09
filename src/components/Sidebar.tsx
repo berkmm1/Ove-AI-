@@ -73,7 +73,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           </div>
 
           <div className="p-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
-            <span>Ove-AI</span>
+            <span>DeepSeek Klonu</span>
             <button onClick={toggleSidebar} className="md:hidden p-1 hover:text-foreground">
               <PanelLeftClose size={18} />
             </button>
