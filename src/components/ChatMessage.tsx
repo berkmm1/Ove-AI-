@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { Brain, User, Bot } from 'lucide-react'
+import { Brain, User, Bot, ChevronRight, ChevronDown } from 'lucide-react'
 import type { Message } from '../types/chat'
 import { cn } from '../lib/utils'
 
@@ -11,6 +11,7 @@ interface ChatMessageProps {
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const isUser = message.role === 'user'
+  const [isExpanded, setIsExpanded] = useState(false)
 
   return (
     <div
@@ -35,13 +36,19 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         <div className="flex min-w-0 flex-1 flex-col gap-4">
           {!isUser && message.reasoning && (
             <div className="rounded-lg border border-border bg-muted/30 p-4">
-              <div className="mb-2 flex items-center gap-2 text-sm font-medium text-muted-foreground">
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="mb-2 flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                 <Brain size={16} className="text-primary animate-pulse" />
                 Düşünce Süreci (DeepThink)
-              </div>
-              <div className="prose prose-sm prose-invert max-w-none text-muted-foreground whitespace-pre-wrap">
-                {message.reasoning}
-              </div>
+              </button>
+              {isExpanded && (
+                <div className="prose prose-sm prose-invert max-w-none text-muted-foreground whitespace-pre-wrap">
+                  {message.reasoning}
+                </div>
+              )}
             </div>
           )}
 

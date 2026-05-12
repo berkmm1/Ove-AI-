@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Send, Paperclip } from 'lucide-react'
+import { Send, Paperclip, Brain, Globe } from 'lucide-react'
 import { useChat } from '../hooks/useChat'
 import { cn } from '../lib/utils'
 
 export const ChatInput: React.FC = () => {
   const [input, setInput] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const { sendMessage, isSending } = useChat()
+  const { sendMessage, isSending, settings, toggleDeepThink, toggleWebSearch } = useChat()
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -35,6 +35,32 @@ export const ChatInput: React.FC = () => {
   return (
     <div className="w-full bg-background pt-2 pb-6 px-4 md:px-6">
       <div className="mx-auto max-w-4xl">
+        <div className="flex items-center gap-2 mb-2 p-1">
+          <button
+            onClick={toggleDeepThink}
+            className={cn(
+              "flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-all",
+              settings.useDeepThink
+                ? "bg-primary/20 text-primary shadow-sm"
+                : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+            )}
+          >
+            <Brain size={16} className={cn(settings.useDeepThink && "text-primary")} />
+            DeepThink (R1)
+          </button>
+          <button
+            onClick={toggleWebSearch}
+            className={cn(
+              "flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-all",
+              settings.useWebSearch
+                ? "bg-blue-500/20 text-blue-400 shadow-sm"
+                : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+            )}
+          >
+            <Globe size={16} className={cn(settings.useWebSearch && "text-blue-400")} />
+            Arama
+          </button>
+        </div>
         <div className="relative flex w-full items-end gap-2 rounded-2xl border border-border bg-muted/20 p-2 shadow-sm focus-within:ring-1 focus-within:ring-primary/50 focus-within:border-primary/50 transition-all">
           <button
             type="button"
@@ -48,7 +74,7 @@ export const ChatInput: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ove-AI'a mesaj gönder..."
+            placeholder="DeepSeek Klonu'na mesaj gönder..."
             className="max-h-[200px] min-h-[40px] w-full resize-none bg-transparent py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
             rows={1}
             disabled={isSending}
@@ -68,7 +94,7 @@ export const ChatInput: React.FC = () => {
           </button>
         </div>
         <div className="mt-2 text-center text-xs text-muted-foreground">
-          Ove-AI hata yapabilir. Önemli bilgileri kontrol edin.
+          DeepSeek Klonu hata yapabilir. Önemli bilgileri kontrol edin.
         </div>
       </div>
     </div>
