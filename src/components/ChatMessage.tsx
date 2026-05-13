@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { Brain, User, Bot } from 'lucide-react'
+import { Brain, ChevronDown, ChevronRight } from 'lucide-react'
 import type { Message } from '../types/chat'
 import { cn } from '../lib/utils'
 
@@ -11,41 +11,42 @@ interface ChatMessageProps {
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const isUser = message.role === 'user'
+  const [isReasoningOpen, setIsReasoningOpen] = useState(true)
 
   return (
-    <div
-      className={cn(
-        "flex w-full py-6",
-        isUser ? "bg-background" : "bg-muted/10"
-      )}
-    >
-      <div className="mx-auto flex w-full max-w-4xl gap-4 px-4 md:px-6">
-        <div className="flex-shrink-0 pt-1">
-          {isUser ? (
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20 text-primary">
-              <User size={18} />
-            </div>
-          ) : (
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white">
-              <Bot size={18} />
-            </div>
-          )}
-        </div>
+    <div className="flex w-full py-6">
+      <div className={cn(
+        "mx-auto flex w-full max-w-4xl px-4 md:px-6",
+        isUser ? "justify-end" : "justify-start"
+      )}>
+        <div className={cn(
+          "flex min-w-0 flex-col gap-2 max-w-[85%]",
+          isUser ? "items-end" : "items-start"
+        )}>
 
-        <div className="flex min-w-0 flex-1 flex-col gap-4">
           {!isUser && message.reasoning && (
-            <div className="rounded-lg border border-border bg-muted/30 p-4">
-              <div className="mb-2 flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <Brain size={16} className="text-primary animate-pulse" />
-                Düşünce Süreci (DeepThink)
-              </div>
-              <div className="prose prose-sm prose-invert max-w-none text-muted-foreground whitespace-pre-wrap">
-                {message.reasoning}
-              </div>
+            <div className="w-full mb-2">
+              <button
+                onClick={() => setIsReasoningOpen(!isReasoningOpen)}
+                className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mb-2"
+              >
+                {isReasoningOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                <Brain size={16} className={cn("text-primary", isReasoningOpen && "animate-pulse")} />
+                Düşünce Süreci
+              </button>
+
+              {isReasoningOpen && (
+                <div className="rounded-xl border-l-2 border-primary/50 bg-muted/20 p-4 text-sm text-muted-foreground whitespace-pre-wrap">
+                  {message.reasoning}
+                </div>
+              )}
             </div>
           )}
 
-          <div className="prose prose-invert max-w-none break-words">
+          <div className={cn(
+            "prose prose-invert break-words max-w-none px-4 py-3",
+            isUser ? "bg-muted rounded-2xl rounded-tr-sm text-foreground" : "bg-transparent text-foreground"
+          )}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {message.content}
             </ReactMarkdown>
