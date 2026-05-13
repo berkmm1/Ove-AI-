@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Send, Paperclip } from 'lucide-react'
+import { Send, Paperclip, Brain, Globe } from 'lucide-react'
 import { useChat } from '../hooks/useChat'
 import { cn } from '../lib/utils'
 
 export const ChatInput: React.FC = () => {
   const [input, setInput] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const { sendMessage, isSending } = useChat()
+  const { sendMessage, isSending, settings, toggleDeepThink, toggleWebSearch } = useChat()
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -35,40 +35,68 @@ export const ChatInput: React.FC = () => {
   return (
     <div className="w-full bg-background pt-2 pb-6 px-4 md:px-6">
       <div className="mx-auto max-w-4xl">
-        <div className="relative flex w-full items-end gap-2 rounded-2xl border border-border bg-muted/20 p-2 shadow-sm focus-within:ring-1 focus-within:ring-primary/50 focus-within:border-primary/50 transition-all">
-          <button
-            type="button"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-          >
-            <Paperclip size={20} />
-          </button>
-
+        <div className="relative flex flex-col w-full rounded-2xl border border-border bg-muted/20 p-2 shadow-sm focus-within:ring-1 focus-within:ring-primary/50 focus-within:border-primary/50 transition-all">
           <textarea
             ref={textareaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ove-AI'a mesaj gönder..."
-            className="max-h-[200px] min-h-[40px] w-full resize-none bg-transparent py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+            placeholder="DeepSeek Klonu'na mesaj gönder..."
+            className="max-h-[200px] min-h-[40px] w-full resize-none bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
             rows={1}
             disabled={isSending}
           />
 
-          <button
-            onClick={handleSend}
-            disabled={!input.trim() || isSending}
-            className={cn(
-              "flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all",
-              input.trim() && !isSending
-                ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                : "bg-muted text-muted-foreground cursor-not-allowed"
-            )}
-          >
-            <Send size={18} className={cn(input.trim() && !isSending && "translate-x-0.5")} />
-          </button>
+          <div className="flex items-center justify-between mt-2 pt-2">
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              >
+                <Paperclip size={18} />
+              </button>
+              <button
+                onClick={toggleDeepThink}
+                className={cn(
+                  "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors border",
+                  settings.useDeepThink
+                    ? "bg-primary/10 text-primary border-primary/30"
+                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground border-transparent"
+                )}
+              >
+                <Brain size={14} className={cn(settings.useDeepThink && "text-primary")} />
+                DeepThink (R1)
+              </button>
+              <button
+                onClick={toggleWebSearch}
+                className={cn(
+                  "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors border",
+                  settings.useWebSearch
+                    ? "bg-blue-500/10 text-blue-400 border-blue-500/30"
+                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground border-transparent"
+                )}
+              >
+                <Globe size={14} className={cn(settings.useWebSearch && "text-blue-400")} />
+                Arama
+              </button>
+            </div>
+
+            <button
+              onClick={handleSend}
+              disabled={!input.trim() || isSending}
+              className={cn(
+                "flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all",
+                input.trim() && !isSending
+                  ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                  : "bg-muted text-muted-foreground cursor-not-allowed"
+              )}
+            >
+              <Send size={16} className={cn(input.trim() && !isSending && "translate-x-0.5")} />
+            </button>
+          </div>
         </div>
         <div className="mt-2 text-center text-xs text-muted-foreground">
-          Ove-AI hata yapabilir. Önemli bilgileri kontrol edin.
+          Yapay zeka hata yapabilir. Önemli bilgileri kontrol edin.
         </div>
       </div>
     </div>
