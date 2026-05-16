@@ -29,15 +29,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         )}
       >
         <div className={cn("flex flex-col h-full", !isOpen && "md:hidden")}>
-          <div className="p-3">
+          <div className="p-4">
             <button
               onClick={createNewChat}
-              className="flex w-full items-center justify-between rounded-lg bg-primary/10 px-3 py-3 text-sm font-medium text-primary hover:bg-primary/20 transition-colors"
+              className="flex w-full items-center justify-center gap-2 rounded-full border border-border bg-transparent px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
             >
-              <span className="flex items-center gap-2">
-                <Plus size={18} />
-                Yeni Sohbet
-              </span>
+              <Plus size={18} />
+              Yeni Sohbet
             </button>
           </div>
 
@@ -73,7 +71,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           </div>
 
           <div className="p-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
-            <span>Ove-AI</span>
+            <span>DeepSeek Klonu</span>
             <button onClick={toggleSidebar} className="md:hidden p-1 hover:text-foreground">
               <PanelLeftClose size={18} />
             </button>
