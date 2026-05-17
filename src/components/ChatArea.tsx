@@ -1,12 +1,11 @@
 import React, { useRef, useEffect } from 'react'
-import { Brain, Globe } from 'lucide-react'
+import { Brain } from 'lucide-react'
 import { ChatMessage } from './ChatMessage'
 import { ChatInput } from './ChatInput'
 import { useChat } from '../hooks/useChat'
-import { cn } from '../lib/utils'
 
 export const ChatArea: React.FC = () => {
-  const { chats, currentChatId, settings, toggleDeepThink, toggleWebSearch, isSending } = useChat()
+  const { chats, currentChatId, isSending } = useChat()
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const currentChat = chats.find(c => c.id === currentChatId)
@@ -21,48 +20,17 @@ export const ChatArea: React.FC = () => {
   }, [messages.length, isSending])
 
   return (
-    <div className="flex flex-col h-full w-full">
-      {/* Header */}
-      <header className="flex h-14 shrink-0 items-center justify-center border-b border-border bg-background/95 backdrop-blur px-4 md:px-6">
-        <div className="flex items-center gap-2 rounded-lg bg-muted/30 p-1">
-          <button
-            onClick={toggleDeepThink}
-            className={cn(
-              "flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-all",
-              settings.useDeepThink
-                ? "bg-primary/20 text-primary shadow-sm"
-                : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-            )}
-          >
-            <Brain size={16} className={cn(settings.useDeepThink && "text-primary")} />
-            DeepThink (R1)
-          </button>
-          <div className="h-4 w-px bg-border" />
-          <button
-            onClick={toggleWebSearch}
-            className={cn(
-              "flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-all",
-              settings.useWebSearch
-                ? "bg-blue-500/20 text-blue-400 shadow-sm"
-                : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-            )}
-          >
-            <Globe size={16} className={cn(settings.useWebSearch && "text-blue-400")} />
-            Arama
-          </button>
-        </div>
-      </header>
-
+    <div className="flex flex-col h-full w-full bg-background relative">
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto pt-6">
         {messages.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center p-8 text-center">
             <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
               <Brain size={32} className="text-primary" />
             </div>
-            <h1 className="mb-2 text-2xl font-semibold text-foreground">Ove-AI'a Hoş Geldiniz</h1>
+            <h1 className="mb-2 text-2xl font-semibold text-foreground">DeepSeek Klonu'na Hoş Geldiniz</h1>
             <p className="max-w-md text-muted-foreground">
-              Size nasıl yardımcı olabilirim? DeepThink R1 ile derinlemesine düşünebilir veya internette arama yapabilirim.
+              Size nasıl yardımcı olabilirim?
             </p>
           </div>
         ) : (
@@ -77,7 +45,7 @@ export const ChatArea: React.FC = () => {
                     <Brain size={18} className="animate-pulse" />
                   </div>
                   <div className="flex items-center text-sm text-muted-foreground">
-                    Ove-AI düşünüyor...
+                    DeepSeek Klonu düşünüyor...
                   </div>
                 </div>
               </div>
